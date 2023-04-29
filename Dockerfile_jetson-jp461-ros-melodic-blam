@@ -2,6 +2,7 @@
 # Docker build
 ########################################
 #time sudo docker build -t naisy/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
+#docker build -t heavy02011/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
 
 #sudo service docker stop
 #cd /var/run
