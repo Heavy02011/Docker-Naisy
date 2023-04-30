@@ -44,7 +44,8 @@ fi
 # docker image
 ########################################
 #IMG=naisy/jetson-jp461-ros-melodic
-IMG=heavy02011/jetson-jp461-ros-melodic
+IMG=heavy02011/jetson-jp461-ros-melodic-blam
+#IMG=jetson-jp461-ros-melodic-blam
 
 docker run \
     --runtime=nvidia \

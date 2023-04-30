@@ -50,11 +50,12 @@ fi
 ########################################
 # docker image
 ########################################
-IMG=naisy/jetson-jp461-deepstream601-triton-ros2-foxy
+#IMG=naisy/jetson-jp461-deepstream601-triton-ros2-foxy
+IMG=heavy02022/jetson-jp461-deepstream601-triton-ros2-foxy
 
 docker run \
     --runtime=nvidia \
-    --restart always \
+#    --restart always \
     -itd \
     --mount type=bind,source=$XSOCK,target=$XSOCK \
     --mount type=bind,source=$HOST_USER_XAUTH,target=$DOCKER_USER_XAUTH \
