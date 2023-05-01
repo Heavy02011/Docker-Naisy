@@ -2,6 +2,7 @@
 # Docker build
 ########################################
 #time sudo docker build -t naisy/jetson-jp461-deepstream601-triton-ros2-humble -f Dockerfile.jetson-jp461-deepstream601-triton-ros2-humble .
+#time sudo docker build -t heavy02011/jetson-jp461-deepstream601-triton-ros2-humble -f Dockerfile.jetson-jp461-deepstream601-triton-ros2-humble .
 
 
 ########################################

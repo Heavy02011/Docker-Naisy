@@ -2,7 +2,7 @@
 # Docker build
 ########################################
 #time sudo docker build -t naisy/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
-#docker build -t heavy02011/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
+#time sudo docker build -t heavy02011/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
 
 #sudo service docker stop
 #cd /var/run
@@ -536,6 +536,10 @@ RUN apt-get update \
     && apt-get install -y ros-melodic-desktop-full \
     && apt-get install -y ros-melodic-velodyne \
     && apt-get install -y python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential python-rosdep \
+    && apt-get install -y ros-melodic-sparse-bundle-adjustment \
+    && apt-get update \
+    && apt-get install -y ros-melodic-map-server \
+    && apt-get install -y libceres-dev \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
