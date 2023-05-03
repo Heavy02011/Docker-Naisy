@@ -55,6 +55,7 @@ fi
 IMG=dustynv/ros:foxy-desktop-l4t-r35.3.1
 
 #    --restart=always \
+#    -u $DOCKER_USER \
 docker run \
     --runtime=nvidia \
     -it \
@@ -71,7 +72,6 @@ docker run \
     -v /etc/localtime:/etc/localtime:ro \
     --mount type=bind,source=$CSI_CAMERA,target=$CSI_CAMERA \
     -v /dev/:/dev/ \
-    -u $DOCKER_USER \
     --privileged \
     --network=host \
 $IMG
