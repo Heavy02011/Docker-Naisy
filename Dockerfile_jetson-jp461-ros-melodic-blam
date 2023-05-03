@@ -540,34 +540,37 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y ros-melodic-map-server \
     && apt-get install -y libceres-dev \
+    && apt-get install -y tmux \
+    && apt-get install -y ros-melodic-joy \
+    && apt-get install -y ros-melodic-teleop-twist-joy \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 ########################################
 # GTSAM
 ########################################
-USER jetson
-RUN sudo apt-get update \
-    && sudo apt-get install -y libboost-all-dev \
-    && sudo apt-get install -y libtbb-dev \
-    && mkdir ~/github \
-    && cd ~/github \
-    && git clone -b 4.0.3 https://github.com/borglab/gtsam \
-    && cd gtsam \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-    && sudo make install \
-    && sudo apt autoremove -y \
-    && sudo rm -rf /var/lib/apt/lists/*
+#USER jetson
+#RUN sudo apt-get update \
+#    && sudo apt-get install -y libboost-all-dev \
+#    && sudo apt-get install -y libtbb-dev \
+#    && mkdir ~/github \
+#    && cd ~/github \
+#    && git clone -b 4.0.3 https://github.com/borglab/gtsam \
+#    && cd gtsam \
+#    && mkdir build \
+#    && cd build \
+#    && cmake .. \
+#    && sudo make install \
+#    && sudo apt autoremove -y \
+#    && sudo rm -rf /var/lib/apt/lists/*
 
 RUN sudo rosdep init \
     && rosdep update
 
-RUN cd ~/github \
-    && git clone https://github.com/naisy/blam \
-    && cd blam/ \
-    && bash -c 'source ${ROS_ROOT}/setup.bash && ./build.sh'
+#RUN cd ~/github \
+#    && git clone https://github.com/naisy/blam \
+#    && cd blam/ \
+#    && bash -c 'source ${ROS_ROOT}/setup.bash && ./build.sh'
 
 
 # finish

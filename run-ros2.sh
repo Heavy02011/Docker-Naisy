@@ -44,8 +44,15 @@ fi
 # docker image
 ########################################
 #IMG=naisy/jetson-jp461-ros-melodic
-IMG=heavy02011/jetson-jp461-ros-melodic-blam
+#IMG=heavy02011/ros:foxy-pytorch-l4t-r35.1.0I
+#IMG=foxy-pytorch-l4t-r35.1.0I # erfolgreich gestartet
+#IMG=heavy02011/jetson-jp461-ros-melodic-blam
 #IMG=jetson-jp461-ros-melodic-blam
+#
+# source:
+# https://hub.docker.com/r/dustynv/ros/tags
+# https://github.com/dusty-nv/jetson-containers
+IMG=dustynv/ros:foxy-desktop-l4t-r35.3.1
 
 #    --restart=always \
 docker run \
