@@ -50,13 +50,17 @@ fi
 #IMG=jetson-jp461-ros-melodic-blam
 #
 # source:
-# https://hub.docker.com/r/dustynv/ros/tags
+# based on https://hub.docker.com/r/dustynv/ros/tags
 # https://github.com/dusty-nv/jetson-containers
 #IMG=dustynv/ros:foxy-desktop-l4t-r35.3.1
-IMG=heavy02011/ros:foxy-desktop-l4t-r35.3.1_002
+#IMG=heavy02011/ros:foxy-desktop-l4t-r35.3.1_002
+# created with Docker-Naisy
+# time sudo docker build -t heavy02011/jetson-jp461-ros-foxy-003 -f Dockerfile.jetson-jp461-ros-foxy-003 .
+IMG=heavy02011/jetson-jp461-ros-foxy-003:latest
 
 #    --restart=always \
 #    -u $DOCKER_USER \
+#    -v /tmp/.X11-unix:/tmp/.X11-unix \
 docker run \
     --runtime=nvidia \
     -it \
