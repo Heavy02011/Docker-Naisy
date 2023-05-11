@@ -572,6 +572,9 @@ RUN sudo rosdep init \
 #    && cd blam/ \
 #    && bash -c 'source ${ROS_ROOT}/setup.bash && ./build.sh'
 
+RUN apt-get update \
+     && apt-get install -y libi2c-dev
+
 
 # finish
 ########################################
