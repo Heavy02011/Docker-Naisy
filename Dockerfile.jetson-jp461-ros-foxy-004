@@ -3,6 +3,7 @@
 ########################################
 #time sudo docker build -t naisy/jetson-jp461-ros-melodic-blam -f Dockerfile_jetson-jp461-ros-melodic-blam .
 #running: time sudo docker build -t heavy02011/jetson-jp461-ros-foxy-003 -f Dockerfile.jetson-jp461-ros-foxy-003 .
+#test: time sudo docker build -t heavy02011/jetson-jp461-ros-foxy-004 -f Dockerfile.jetson-jp461-ros-foxy-004 .
 
 #sudo service docker stop
 #cd /var/run
@@ -38,10 +39,10 @@
 #FROM nvcr.io/nvidia/l4t-ml:r32.7.1-py3
 
 # rbx running version
-FROM dustynv/ros:foxy-desktop-l4t-r35.3.1 
+# FROM dustynv/ros:foxy-desktop-l4t-r35.3.1 
 
 # rbx testing with python 3.7
-# FROM dustynv/ros:foxy-desktop-l4t-r34.1.1 
+FROM dustynv/ros:foxy-desktop-l4t-r34.1.1 
 
 
 ########################################
@@ -587,7 +588,23 @@ RUN apt-get update && apt-get install -y \
 ###    cd /home/jetson/dev_ws && \
 ###    colcon build --symlink-install"
 
+########################################
+# raceline code TUM
+########################################
 
+RUN apt-get install -y python3 python3-dev python3-pip python3-yaml git build-essential cmake nano libtool m4 automake byacc bison flex libxml2-dev libxml2 2to3
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install python-igraph==0.8.2
+
+COPY /home/jetson/data/GraphBasedLocalTrajectoryPlanner/requirements.txt requirements.txt
+
+RUN python3 -m pip install -r requirements.txt
+RUN apt-get install -y python3-igraph # rbx
+RUN python3 -m pip install numpy scipy pyyaml zmq igraph trajectory_planning_helpers scikit-build cmake wstool vcstools
+
+COPY /home/jetson/data/global_racetrajectory_optimization/requirements.txt requirements.txt
+RUN python3 -m pip install -r requirements.txt
 
 
 # Expose Gazebo ports
