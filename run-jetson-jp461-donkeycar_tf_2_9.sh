@@ -52,11 +52,11 @@ fi
 ########################################
 # IMG=naisy/jetson-jp461-donkeycar
 IMG=heavy02011/jetson-jp461-donkeycar_tf_2_9
-
+# itd
 docker run \
     --runtime=nvidia \
     --restart always \
-    -itd \
+    -it \
     --mount type=bind,source=$XSOCK,target=$XSOCK \
     --mount type=bind,source=$HOST_USER_XAUTH,target=$DOCKER_USER_XAUTH \
     --mount type=bind,source=$HOST_MOUNT_PATH,target=$DOCKER_MOUNT_PATH \
@@ -75,4 +75,5 @@ docker run \
     -u $DOCKER_USER \
     --privileged \
     --network=host \
+    --device=/dev/gpiochip0:/dev/gpiochip0 \
 $IMG

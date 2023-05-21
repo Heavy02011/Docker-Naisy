@@ -42,8 +42,13 @@
 # FROM dustynv/ros:foxy-desktop-l4t-r35.3.1 
 
 # rbx testing with python 3.7
-FROM dustynv/ros:foxy-desktop-l4t-r34.1.1 
 
+# testen
+# FROM dustynv/ros:foxy-desktop-l4t-r34.1.1 # fail
+# FROM dustynv/ros:foxy-pytorch-l4t-r32.7.1 # fail
+# FROM nvcr.io/nvidia/l4t-ml:r34.1.0-py3 # fail
+# FROM dustynv/ros:foxy-desktop-l4t-r35.1.0 # fail
+FROM dustynv/ros:foxy-desktop-l4t-r35.2.1
 
 ########################################
 # ENV
@@ -448,6 +453,7 @@ RUN apt-get update \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
+
 RUN apt-get update \
     && apt-get -y install \
       dialog \
@@ -592,18 +598,23 @@ RUN apt-get update && apt-get install -y \
 # raceline code TUM
 ########################################
 
-RUN apt-get install -y python3 python3-dev python3-pip python3-yaml git build-essential cmake nano libtool m4 automake byacc bison flex libxml2-dev libxml2 2to3
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+# Set the container's working directory to the user's home folder
+WORKDIR /home/jetson
+
+# RUN apt-get install -y python3 python3-dev python3-pip python3-yaml git build-essential cmake nano libtool m4 automake byacc bison flex libxml2-dev libxml2 2to3
+# RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install python-igraph==0.8.2
+# RUN python3 -m pip install python-igraph==0.8.2
 
-COPY /home/jetson/data/GraphBasedLocalTrajectoryPlanner/requirements.txt requirements.txt
+# COPY /home/rainer/data/GraphBasedLocalTrajectoryPlanner/requirements.txt ./requirements.txt
+# COPY /home/rainer/data/GraphBasedLocalTrajectoryPlanner
 
-RUN python3 -m pip install -r requirements.txt
+
+RUN python3 -m pip install -r ./data/GraphBasedLocalTrajectoryPlanner/requirements.txt
 RUN apt-get install -y python3-igraph # rbx
 RUN python3 -m pip install numpy scipy pyyaml zmq igraph trajectory_planning_helpers scikit-build cmake wstool vcstools
 
-COPY /home/jetson/data/global_racetrajectory_optimization/requirements.txt requirements.txt
+COPY /home/rainer/data/global_racetrajectory_optimization/requirements.txt requirements.txt
 RUN python3 -m pip install -r requirements.txt
 
 
@@ -611,8 +622,6 @@ RUN python3 -m pip install -r requirements.txt
 EXPOSE 11345
 EXPOSE 11311
 
-# Set the container's working directory to the user's home folder
-WORKDIR /home/jetson
 
 # Set the entrypoint to source ROS and Gazebo setup scripts
 ENTRYPOINT ["bash", "-c", "source /opt/ros/foxy/setup.bash && source /usr/share/gazebo-11/setup.sh && exec \"$@\"", "--"]
