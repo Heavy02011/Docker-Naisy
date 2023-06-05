@@ -523,6 +523,7 @@ RUN apt-get update \
     && pip3 install -U tf2onnx \
     && pip3 install -U pillow \
     && pip3 install -U netron \
+    && pip3 install -U pyserial \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
@@ -545,8 +546,18 @@ RUN apt-get update \
        && apt-get install -y ros-foxy-rplidar-ros \
        && apt-get install -y ros-foxy-ackermann-msgs \
        && apt-get install -y ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control \
-       && apt-get install -y ros-foxy-xacro ros-foxy-joint-state-publisher-gui
+       && apt-get install -y ros-foxy-xacro ros-foxy-joint-state-publisher-gui \
+       && apt-get install -y python3-pip
 
+# RUN pip3 install transformations
+#  && apt-get install -y ros-foxy-tf2-py \
+#  && apt-get install -y ros-foxy-tf2-ros \
+#  && apt-get install -y ros-foxy-navigation2 \
+#  && apt-get install -y ros-foxy-nav2-bringup \
+
+RUN apt-get update && apt-get install -y ros-foxy-tf2-py ros-foxy-tf2-ros ros-foxy-navigation2 ros-foxy-nav2-bringup
+ENV PYTHONPATH=$PYTHONPATH:/home/jetson/data/range_libc/pywrapper/build/lib.linux-aarch64-cpython-38/
+# RUN apt-get update && apt-get install -y ros-foxy-turtlebot3-gazebo
 
 ########################################
 # ROS gazebo
@@ -589,6 +600,8 @@ RUN apt-get update && apt-get install -y \
 
 
 
+#root@docker-donkeynano11:/home/jetson# cp .Xauthority /root
+# COPY /home/rainer/.Xauthority /root/.Xauthority
 
 # Expose Gazebo ports
 EXPOSE 11345
@@ -604,5 +617,4 @@ ENTRYPOINT ["bash", "-c", "source /opt/ros/foxy/setup.bash && source /usr/share/
 CMD ["bash"]
 
 
-#### finish
-###########################################
+#### finisha##########################################

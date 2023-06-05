@@ -20,6 +20,7 @@ if [ -z $DISPLAY ]; then
     # localhost display
     # Ubuntu 18.04: :0
     # Ubuntu 20.04: :1
+    # Ubuntu 22.04: :0
     DISPLAY=:0
 fi
 
@@ -40,40 +41,34 @@ if [ ! -d "$HOST_MOUNT_PATH" ]; then
 fi
 
 ########################################
-# make JupyterLab HOME directory
-########################################
-if [ ! -d "$HOST_MOUNT_PATH"/Notebooks ]; then
-    mkdir $HOST_MOUNT_PATH/Notebooks
-    chown $HOST_USER:$HOST_USER_GROUP $HOST_MOUNT_PATH/Notebooks
-fi
-
-########################################
 # docker image
 ########################################
-# IMG=naisy/jetson-jp461-donkeycar
-IMG=heavy02011/jetson-jp461-donkeycar_tf_2_9
-# itd
-#    --restart always \
-docker run \
-    --runtime=nvidia \
+#IMG=naisy/jetson-jp461-ros-melodic
+#IMG=heavy02011/ros:foxy-pytorch-l4t-r35.1.0I
+#IMG=foxy-pytorch-l4t-r35.1.0I # erfolgreich gestartet
+#IMG=heavy02011/jetson-jp461-ros-melodic-blam
+#IMG=jetson-jp461-ros-melodic-blam
+#
+# source:
+# based on https://hub.docker.com/r/dustynv/ros/tags
+# https://github.com/dusty-nv/jetson-containers
+#IMG=dustynv/ros:foxy-desktop-l4t-r35.3.1
+#IMG=heavy02011/ros:foxy-desktop-l4t-r35.3.1_002
+# created with Docker-Naisy
+# time sudo docker build -t heavy02011/jetson-jp461-ros-foxy-003 -f Dockerfile.jetson-jp461-ros-foxy-003 .
+IMG=heavy02011/jetson-jp461-ros-foxy-003:latest
+
+#    -u $DOCKER_USER \
+#    -v /tmp/.X11-unix:/tmp/.X11-unix \
+#    --restart=always \
+#    --runtime=nvidia \
+docker exec \
     -it \
-    --mount type=bind,source=$XSOCK,target=$XSOCK \
-    --mount type=bind,source=$HOST_USER_XAUTH,target=$DOCKER_USER_XAUTH \
-    --mount type=bind,source=$HOST_MOUNT_PATH,target=$DOCKER_MOUNT_PATH \
     -e DISPLAY=$DISPLAY \
-    -e LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1 \
     -e OPENBLAS_CORETYPE=ARMV8 \
     -e QT_GRAPHICSSYSTEM=native \
     -e QT_X11_NO_MITSHM=1 \
     -e SHELL=/bin/bash \
-    -v /run/user/1000/:/run/user/1000/:ro \
-    -v /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro \
-    -v /etc/localtime:/etc/localtime:ro \
-    -v /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstpango.so:/usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstpango.so:ro \
-    --mount type=bind,source=$CSI_CAMERA,target=$CSI_CAMERA \
-    -v /dev/:/dev/ \
-    -u $DOCKER_USER \
     --privileged \
-    --network=host \
-    --device=/dev/gpiochip0:/dev/gpiochip0 \
-$IMG
+8cc4a300ff05 \
+bash

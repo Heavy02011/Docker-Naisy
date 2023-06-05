@@ -530,6 +530,7 @@ RUN apt-get update \
     && pip3 install -U tf2onnx \
     && pip3 install -U pillow \
     && pip3 install -U netron \
+    && pip3 install -U pyserial \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
@@ -552,7 +553,8 @@ RUN apt-get update \
        && apt-get install -y ros-foxy-rplidar-ros \
        && apt-get install -y ros-foxy-ackermann-msgs \
        && apt-get install -y ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control \
-       && apt-get install -y ros-foxy-xacro ros-foxy-joint-state-publisher-gui
+       && apt-get install -y ros-foxy-xacro ros-foxy-joint-state-publisher-gui \
+       && apt-get install -y python3-pip
 
 
 ########################################
@@ -599,23 +601,22 @@ RUN apt-get update && apt-get install -y \
 ########################################
 
 # Set the container's working directory to the user's home folder
-WORKDIR /home/jetson
+WORKDIR /home/jetson/data
 
-# RUN apt-get install -y python3 python3-dev python3-pip python3-yaml git build-essential cmake nano libtool m4 automake byacc bison flex libxml2-dev libxml2 2to3
-# RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-RUN python3 -m pip install --upgrade pip
-# RUN python3 -m pip install python-igraph==0.8.2
+# RUN pip3 install graph-ltpl
 
-# COPY /home/rainer/data/GraphBasedLocalTrajectoryPlanner/requirements.txt ./requirements.txt
-# COPY /home/rainer/data/GraphBasedLocalTrajectoryPlanner
-
-
-RUN python3 -m pip install -r ./data/GraphBasedLocalTrajectoryPlanner/requirements.txt
-RUN apt-get install -y python3-igraph # rbx
-RUN python3 -m pip install numpy scipy pyyaml zmq igraph trajectory_planning_helpers scikit-build cmake wstool vcstools
-
-COPY /home/rainer/data/global_racetrajectory_optimization/requirements.txt requirements.txt
-RUN python3 -m pip install -r requirements.txt
+RUN pip3 install casadi==3.5.5
+# RUN pip3 uninstall matplotlib && apt-get install -y matplotlib
+RUN pip3 install numpy==1.22.0
+RUN pip3 install matplotlib==3.3.1
+RUN pip3 install scipy==1.3.3
+RUN pip3 install python-igraph
+RUN pip3 install trajectory_planning_helpers==0.75
+RUN pip3 install flake8==3.7.9
+RUN pip3 install velocity_optimization
+# RUN pip3 install pyzmq
+RUN git clone https://github.com/TUMFTM/GraphBasedLocalTrajectoryPlanner.git
+# RUN cd /home/jetson/data/GraphBasedLocalTrajectoryPlanner/ && git checkout dependabot/pip/numpy-1.22.0 && pip3 install -r requirements.txt
 
 
 # Expose Gazebo ports

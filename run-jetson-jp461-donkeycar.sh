@@ -52,9 +52,9 @@ fi
 ########################################
 IMG=naisy/jetson-jp461-donkeycar
 
+#    --restart always \
 docker run \
     --runtime=nvidia \
-    --restart always \
     -itd \
     --mount type=bind,source=$XSOCK,target=$XSOCK \
     --mount type=bind,source=$HOST_USER_XAUTH,target=$DOCKER_USER_XAUTH \

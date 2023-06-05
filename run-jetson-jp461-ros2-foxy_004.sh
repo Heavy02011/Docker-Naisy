@@ -80,4 +80,5 @@ docker run \
     -v /dev/:/dev/ \
     --privileged \
     --network=host \
+    --device /dev/ttyACM0 \
 $IMG

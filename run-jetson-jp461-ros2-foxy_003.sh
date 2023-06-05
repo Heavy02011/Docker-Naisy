@@ -58,10 +58,10 @@ fi
 # time sudo docker build -t heavy02011/jetson-jp461-ros-foxy-003 -f Dockerfile.jetson-jp461-ros-foxy-003 .
 IMG=heavy02011/jetson-jp461-ros-foxy-003:latest
 
-#    --restart=always \
 #    -u $DOCKER_USER \
 #    -v /tmp/.X11-unix:/tmp/.X11-unix \
 docker run \
+    --restart=always \
     --runtime=nvidia \
     -it \
     --mount type=bind,source=$XSOCK,target=$XSOCK \
@@ -79,4 +79,5 @@ docker run \
     -v /dev/:/dev/ \
     --privileged \
     --network=host \
+    --device /dev/ttyACM0 \
 $IMG
